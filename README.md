@@ -6,7 +6,7 @@ A fork of Dan Rodriguez' original gem which interacts with the CheetahMail API. 
 To use this fork in your project, add to your Gemfile:
 
 ```ruby
-gem 'cheetah', git: 'https://github.com/harman-signal-processing/cheetah.git'
+gem 'cheetah', git: 'https://github.com/adamtao/cheetah.git'
 ```
 
 Then run bundler. There are a whole lot of dependencies. I'm trying to sort out which are really still needed.
