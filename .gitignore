@@ -3,3 +3,5 @@
 pkg/*
 *.swp
 .rvmrc
+.ruby-version
+.ruby-gemset
