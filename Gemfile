@@ -5,7 +5,8 @@ source "http://gems.github.com"
 gemspec
 
 group :development, :test do
-  gem 'ruby-debug'
+  gem 'ruby-debug', :platforms => :ruby_18
+	gem 'ruby-debug19', :platforms => :ruby_19
 end
 
 group :test do

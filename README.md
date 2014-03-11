@@ -1,3 +1,20 @@
+CheetahMail for ruby
+====================
+
+A fork of Dan Rodriguez' original gem which interacts with the CheetahMail API. This is an attempt to make it work with newer rubies (the original only seemed to work ruby 1.8.x).
+
+To use this fork in your project, add to your Gemfile:
+
+```ruby
+gem 'cheetah', git: 'https://github.com/harman-signal-processing/cheetah'
+```
+
+Then run bundler. There are a whole lot of dependencies. I'm trying to sort out which are really still needed.
+
+
+Original Documentation
+----------------------
+
 Sorry for not much documentation. I have to work on that...
 
 But basically you create a Cheetah instance like so:

@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name        = "cheetah"
   s.version     = Cheetah::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Dan Rodriguez"]
-  s.email       = ["theoperand@gmail.com"]
+  s.authors     = ["Dan Rodriguez", "Adam Anderson"]
+  s.email       = ["theoperand@gmail.com", "adam@makeascene.com"]
   s.homepage    = ""
   s.summary     = %q{A simple library for integrating with the CheetahMail API}
   s.description = %q{A simple library for integrating with the CheetahMail API}
@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'fakeweb'
 
   s.add_runtime_dependency 'resque'
-  s.add_runtime_dependency 'system_timer'
+  # s.add_runtime_dependency 'system_timer'
 end
