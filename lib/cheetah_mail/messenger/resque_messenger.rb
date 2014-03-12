@@ -1,6 +1,6 @@
 require 'resque'
 
-module Cheetah
+module CheetahMail
   # this is both extends Messenger and implements the Resque worker interface
   class ResqueMessenger < Messenger
     @queue = :cheetah

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # through this class I'm also testing the base messenger class
-describe Cheetah::SynchronousMessenger do
+describe CheetahMail::SynchronousMessenger do
   before do
     @options = {
       :host             => "foo.com",
@@ -10,7 +10,7 @@ describe Cheetah::SynchronousMessenger do
       :aid              => "123",
       :enable_tracking  => false,
     }
-    @messenger = Cheetah::SynchronousMessenger.new(@options)
+    @messenger = CheetahMail::SynchronousMessenger.new(@options)
     stub_http
   end
 
@@ -28,26 +28,26 @@ describe Cheetah::SynchronousMessenger do
       @messenger.do_send(@message)
     end
 
-    it "should raise CheetahPermanentException when there's an authorization problem" do
+    it "should raise CheetahMailPermanentException when there's an authorization problem" do
       @resp.stub(:code).and_return('200')
       @resp.stub(:body).and_return('err:auth')
-      lambda { @messenger.do_send(@message) }.should raise_error(CheetahPermanentException)
+      lambda { @messenger.do_send(@message) }.should raise_error(CheetahMailPermanentException)
     end
 
-    it "should raise CheetahPermanentException when there's a permanent error on Cheetah's end" do
+    it "should raise CheetahMailPermanentException when there's a permanent error on Cheetah's end" do
       @resp.stub(:code).and_return('400')
-      lambda { @messenger.do_send(@message) }.should raise_error(CheetahPermanentException)
+      lambda { @messenger.do_send(@message) }.should raise_error(CheetahMailPermanentException)
     end
 
-    it "should raise CheetahTemporaryException when there's a temporary (server) error on Cheetah's end" do
+    it "should raise CheetahMailTemporaryException when there's a temporary (server) error on Cheetah's end" do
       @resp.stub(:code).and_return('500')
-      lambda { @messenger.do_send(@message) }.should raise_error(CheetahTemporaryException)
+      lambda { @messenger.do_send(@message) }.should raise_error(CheetahMailTemporaryException)
     end
 
-    it "should raise CheetahTemporaryException when there's a temporary error on Cheetah's end" do
+    it "should raise CheetahMailTemporaryException when there's a temporary error on Cheetah's end" do
       @resp.stub(:code).and_return('200')
       @resp.stub(:body).and_return('err:internal error')
-      lambda { @messenger.do_send(@message) }.should raise_error(CheetahTemporaryException)
+      lambda { @messenger.do_send(@message) }.should raise_error(CheetahMailTemporaryException)
     end
   end
 
@@ -65,7 +65,7 @@ describe Cheetah::SynchronousMessenger do
     context 'with a whitelist filter' do
       before do
         @options[:whitelist_filter] = /@test\.com$/
-        @messenger = Cheetah::SynchronousMessenger.new(@options)
+        @messenger = CheetahMail::SynchronousMessenger.new(@options)
         @message   = Message.new('/', @params)
       end
 
@@ -94,7 +94,7 @@ describe Cheetah::SynchronousMessenger do
         context "with :enable_tracking set to true" do
           before do
             @options[:enable_tracking] = true
-            @messenger = Cheetah::SynchronousMessenger.new(@options)
+            @messenger = CheetahMail::SynchronousMessenger.new(@options)
           end
 
           it 'should not set the test parameter' do
@@ -106,7 +106,7 @@ describe Cheetah::SynchronousMessenger do
         context "with :enable_tracking set to false" do
           before do
             @options[:enable_tracking] = false
-            @messenger = Cheetah::SynchronousMessenger.new(@options)
+            @messenger = CheetahMail::SynchronousMessenger.new(@options)
           end
 
           it 'should set the test parameter' do

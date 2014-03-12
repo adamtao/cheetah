@@ -6,46 +6,58 @@ A fork of Dan Rodriguez' original gem which interacts with the CheetahMail API. 
 To use this fork in your project, add to your Gemfile:
 
 ```ruby
-gem 'cheetah', git: 'https://github.com/adamtao/cheetah.git'
+gem 'cheetah_mail', git: 'https://github.com/adamtao/cheetah_mail.git'
 ```
 
-Then run bundler. There are a whole lot of dependencies. I'm trying to sort out which are really still needed.
+Then run bundler. There are a handful of ways to queue up your cheetahmail interaction. If you want to use resque, you'll also need to include it in your Gemfile. 
+
+```ruby
+gem 'resque'
+```
+
+(I've removed this dependency since there are other queuing mechanisms which don't require resque.)
 
 
-Original Documentation
+Usage
 ----------------------
 
-Sorry for not much documentation. I have to work on that...
+Basically you create a Cheetah instance like so:
 
-But basically you create a Cheetah instance like so:
+```ruby
+cheetah = CheetahMail::Cheetah.new({
+  :host             => 'ebm.cheetahmail.com',
+  :username         => 'foo_api_user',
+  :password         => '12345',
+  :aid              => '67890',                  # the 'affiliate id'
+  :whitelist_filter => //,                       # if set, emails will only be sent to addresses which match this pattern
+  :enable_tracking  => true,                     # determines whether cheetahmail will track the sending of emails for analytics purposes
+  :messenger        => CheetahMail::ResqueMessenger
+})
+```
 
+Options for :messenger include CheetahMail::ResqueMessenger or CheetahMail::SynchronousMessenger .
 
-    cheetah = Cheetah::Cheetah.new({
-      :host             => 'ebm.cheetahmail.com',
-      :username         => 'foo_api_user',
-      :password         => '12345',
-      :aid              => '67890',                  # the 'affiliate id'
-      :whitelist_filter => //,                       # if set, emails will only be sent to addresses which match this pattern
-      :enable_tracking  => true,                     # determines whether cheetahmail will track the sending of emails for analytics purposes
-      :messenger        => Cheetah::ResqueMessenger
-    })
+To send a message:
+```ruby
+cheetah.send_email(
+  eid,    # cheetahmail's EID for the event triggered email
+  email,
+  params, # a hash of parameters used to populate any dynamic fields in the email template
+)
+```
 
+To add or update a description:
+```ruby
+cheetah.mailing_list_update(
+  email,
+  params # a hash of parameters to populate the mailing list fields with
+)
+```
 
-,and then there are three methods you need to know about:
-
-
-    cheetah.send_email(
-      eid,    # cheetahmail's EID for the event triggered email
-      email,
-      params, # a hash of parameters used to populate any dynamic fields in the email template
-    )
-    
-    cheetah.mailing_list_update(
-      email,
-      params # a hash of parameters to populate the mailing list fields with
-    )
-    
-    cheetah.mailing_list_email_change(
-      oldemail,
-      newemail
-    )
+Finally, update someone's email address:
+```ruby
+cheetah.mailing_list_email_change(
+  oldemail,
+  newemail
+)
+```

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Cheetah::Cheetah do
+describe CheetahMail::CheetahMail do
   before do
     options = {
       :host             => "foo.com",
@@ -9,11 +9,11 @@ describe Cheetah::Cheetah do
       :aid              => "123",
       :whitelist_filter => /@test\.com$/,
       :enable_tracking  => false,
-      :messenger        => Cheetah::NullMessenger,
+      :messenger        => CheetahMail::NullMessenger,
     }
     @messenger  = mock(:messenger)
     options[:messenger].stub(:new).and_return(@messenger)
-    @cheetah    = Cheetah::Cheetah.new(options)
+    @cheetah    = CheetahMail::CheetahMail.new(options)
   end
 
   context '#send_email' do

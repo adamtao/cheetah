@@ -2,7 +2,7 @@ require 'net/http'
 require 'net/https'
 require 'uri'
 
-module Cheetah
+module CheetahMail
   class Messenger
 
     def initialize(options)
@@ -30,7 +30,7 @@ module Cheetah
         initheader = {'Cookie' => @cookie || ''}
         message.params['aid'] = @options[:aid]
         resp = do_post(message.path, message.params, initheader)
-      rescue CheetahAuthorizationException => e
+      rescue CheetahMailAuthorizationException => e
         # it may be that the cookie is stale. clear it and immediately retry. 
         # if it hits another authorization exception in the login function then it will come back as a permanent exception
         @cookie = nil
@@ -49,11 +49,11 @@ module Cheetah
       data              = params.to_a.map { |a| "#{a[0]}=#{a[1]}" }.join("&")
       resp              = http.post(path, data, initheader)
 
-      raise CheetahTemporaryException,     "failure:'#{path}?#{data}', HTTP error: #{resp.code}"            if resp.code =~ /5../
-      raise CheetahPermanentException,     "failure:'#{path}?#{data}', HTTP error: #{resp.code}"            if resp.code =~ /[^2]../
-      raise CheetahAuthorizationException, "failure:'#{path}?#{data}', Cheetah error: #{resp.body.strip}"   if resp.body =~ /^err:auth/
-      raise CheetahTemporaryException,     "failure:'#{path}?#{data}', Cheetah error: #{resp.body.strip}"   if resp.body =~ /^err:internal error/
-      raise CheetahPermanentException,     "failure:'#{path}?#{data}', Cheetah error: #{resp.body.strip}"   if resp.body =~ /^err/
+      raise CheetahMailTemporaryException,     "failure:'#{path}?#{data}', HTTP error: #{resp.code}"            if resp.code =~ /5../
+      raise CheetahMailPermanentException,     "failure:'#{path}?#{data}', HTTP error: #{resp.code}"            if resp.code =~ /[^2]../
+      raise CheetahMailAuthorizationException, "failure:'#{path}?#{data}', Cheetah error: #{resp.body.strip}"   if resp.body =~ /^err:auth/
+      raise CheetahMailTemporaryException,     "failure:'#{path}?#{data}', Cheetah error: #{resp.body.strip}"   if resp.body =~ /^err:internal error/
+      raise CheetahMailPermanentException,     "failure:'#{path}?#{data}', Cheetah error: #{resp.body.strip}"   if resp.body =~ /^err/
                                                                                                             
       resp                                                                                                  
     end
@@ -67,8 +67,8 @@ module Cheetah
         params['name']      = @options[:username]
         params['cleartext'] = @options[:password]
         @cookie = do_post(path, params)['set-cookie']
-      rescue CheetahAuthorizationException => e
-        raise CheetahPermanentException, "authorization exception while logging in" # this is a permanent exception, it should not be retried
+      rescue CheetahMailAuthorizationException => e
+        raise CheetahMailPermanentException, "authorization exception while logging in" # this is a permanent exception, it should not be retried
       end
     end
 

@@ -1,10 +1,10 @@
-require 'cheetah/message'
-require 'cheetah/exception'
-require 'cheetah/messenger/messenger'
-Dir["#{File.dirname(__FILE__)}/cheetah/messenger/*.rb"].each {|f| require f}
+require 'cheetah_mail/message'
+require 'cheetah_mail/exception'
+require 'cheetah_mail/messenger/messenger'
+Dir["#{File.dirname(__FILE__)}/cheetah_mail/messenger/*.rb"].each {|f| require f}
 
-module Cheetah
-  class Cheetah
+module CheetahMail
+  class CheetahMail
 
     UNSUB_REASON = {
       'a'	=> 'abuse complaint',
@@ -25,7 +25,7 @@ module Cheetah
     #   :aid              => '67890'                  # the 'affiliate id'
     #   :whitelist_filter => //                       # if set, emails will only be sent to addresses which match this pattern
     #   :enable_tracking  => true                     # determines whether cheetahmail will track the sending of emails for analytics purposes
-    #   :messenger        => Cheetah::ResqueMessenger
+    #   :messenger        => CheetahMail::ResqueMessenger
     # }
     def initialize(options)
       @messenger = options[:messenger].new(options)

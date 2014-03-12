@@ -5,5 +5,5 @@ Bundler::GemHelper.install_tasks
 require 'resque/tasks'
 task 'resque:setup' => :environment
 task :environment do
-  require 'cheetah'
+  require 'cheetah_mail'
 end

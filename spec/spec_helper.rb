@@ -1,4 +1,4 @@
-require 'cheetah'
+require 'cheetah_mail'
 require 'net/http'
 
 # blocks http requests and throws an exception
