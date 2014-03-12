@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cheetah_mail (0.0.6)
+    cheetah_mail (0.6.0)
       resque
 
 GEM
