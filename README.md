@@ -9,13 +9,7 @@ To use this fork in your project, add to your Gemfile:
 gem 'cheetah_mail', git: 'https://github.com/adamtao/cheetah_mail.git'
 ```
 
-Then run bundler. There are a handful of ways to queue up your cheetahmail interaction. If you want to use resque, you'll also need to include it in your Gemfile. 
-
-```ruby
-gem 'resque'
-```
-
-(I've removed this dependency since there are other queuing mechanisms which don't require resque.)
+Then run bundler. 
 
 
 Usage
@@ -24,7 +18,7 @@ Usage
 Basically you create a Cheetah instance like so:
 
 ```ruby
-cheetah = CheetahMail::Cheetah.new({
+cheetah = CheetahMail::CheetahMail.new({
   :host             => 'ebm.cheetahmail.com',
   :username         => 'foo_api_user',
   :password         => '12345',

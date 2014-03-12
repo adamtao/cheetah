@@ -22,6 +22,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'fakeweb'
 
-  s.add_development_dependency 'resque'
-  # s.add_runtime_dependency 'system_timer'
+  s.add_runtime_dependency 'resque'
+  # s.add_runtime_dependency 'system_timer' #only for ruby 1.8.x
 end
